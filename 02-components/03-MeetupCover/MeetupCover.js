@@ -10,12 +10,17 @@ export default defineComponent({
     image: {
       type: String,
       requiered: false,
-      default: '',
+    },
+  },
+  computed: {
+    bgStyle() {
+      if (this.image) return { '--bg-url': 'url(' + this.image + ')' };
+      return {};
     },
   },
 
   template: `
-    <div class="meetup-cover" :style="{'--bg-url': 'url(' + image +')'}" >
+    <div class="meetup-cover" :style="bgStyle">
         <h1 class="meetup-cover__title">{{ title }}</h1>
     </div>`,
 });
