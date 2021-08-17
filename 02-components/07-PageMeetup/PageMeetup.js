@@ -28,16 +28,16 @@ export default defineComponent({
   watch: {
     meetupId: {
       immediate: true,
-      async handler() {
+      handler() {
         this.isLoading = true;
         this.meetup = null;
         this.error = null;
-        try {
-          this.meetup = await fetchMeetupById(this.meetupId);
-        } catch (error) {
-          this.error = error;
-        }
-        this.isLoading = false;
+        fetchMeetupById(this.meetupId)
+          .finally(() => (this.isLoading = false))
+          .then(
+            (value) => (this.meetup = value),
+            (error) => (this.error = error),
+          );
       },
     },
   },
@@ -45,7 +45,7 @@ export default defineComponent({
   template: `
     <div class="page-meetup">
       <!-- meetup view -->
-      <meetup-view v-if="meetup" :meetup="meetup"></meetup-view>
+      <meetup-view v-if="meetup && !isLoading" :meetup="meetup"></meetup-view>
 
       <ui-container v-else-if="isLoading">
         <ui-alert>Загрузка...</ui-alert>
