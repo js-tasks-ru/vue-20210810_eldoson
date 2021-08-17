@@ -3,9 +3,8 @@ jest.mock('../meetupService');
 
 const { default: PageMeetupTest } = require(global.getSolutionPath('PageMeetup'));
 const meetupService = require(global.getSolutionPath('meetupService'));
-import { mount } from '@vue/test-utils';
+import { mount, flushPromises } from '@vue/test-utils';
 import { nextTick } from 'vue';
-import flushPromises from 'flush-promises';
 import meetups from './__fixtures__/meetups';
 
 describe('components/PageMeetup', () => {
@@ -18,7 +17,7 @@ describe('components/PageMeetup', () => {
     });
 
     it('PageMeetup должен выводить только текст "Загрузка..." во время загрузки данных', async () => {
-      jest.spyOn(meetupService, 'fetchMeetupById').mockResolvedValue(meetups[0]);
+      jest.spyOn(meetupService, 'fetchMeetupById').mockReturnValue(new Promise(() => {}));
       const wrapper = mount(PageMeetupTest, {
         props: { meetupId: meetups[0].id },
         global: { stubs: ['MeetupView'] },
