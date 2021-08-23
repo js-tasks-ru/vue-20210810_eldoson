@@ -17,10 +17,10 @@ export default {
       required: false,
     },
   },
-  comuted: {
+  computed: {
     bgImage() {
-      if (this.image) return 'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(' + this.image + ')';
-      return 'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), var(--default-cover)';
+      if (this.image) return 'url(' + this.image + ')';
+      return 'var(--default-cover)';
     },
   },
 };
@@ -30,14 +30,7 @@ export default {
 .meetup-cover {
   background-size: cover;
   background-position: center;
-  /* background-image: v-bind(
-    '"linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))," + image ? "url(" + image + ")" : "var(--default-cover)"'
-  );
-  background-image: v-bind('bgImage'); */
-  background-image: v-bind(
-    'image ? "linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(" + image + ")" : "linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), var(--default-cover)" '
-  );
-  /* background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), var(--default-cover); */
+  background-image: v-bind('"linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))," + bgImage');
   display: flex;
   flex-direction: column;
   align-items: center;
